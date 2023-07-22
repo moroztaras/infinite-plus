@@ -28,7 +28,7 @@ abstract class ApiController extends AbstractController
         return $this->doctrine;
     }
 
-    protected function getCurrentUser(Request $request): ?Employee
+    protected function getEmployee(Request $request): ?Employee
     {
         $employee = $this->doctrine->getManager()->getRepository(Employee::class)->findOneBy([
             'apiKey' => $request->headers->get('x-api-key'),

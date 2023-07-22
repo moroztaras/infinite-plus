@@ -11,6 +11,8 @@ use App\Validator\Helper\ApiObjectValidator;
 use Doctrine\Persistence\ManagerRegistry;
 use Ramsey\Uuid\Nonstandard\Uuid;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
 use Symfony\Component\Serializer\Normalizer\UnwrappingDenormalizer;
 
 class EmployeeManager
@@ -34,6 +36,20 @@ class EmployeeManager
         if ($this->doctrine->getRepository(Employee::class)->findOneBy(['email' => $employee->getEmail()])) {
             throw new ExpectedBadRequestJsonHttpException('Employee already exists.');
         }
+
+        $this->saveEmployee($employee, $employee->getPlainPassword());
+
+        return $employee;
+    }
+
+    public function editEmployee($content, Employee $employee): Employee
+    {
+        $validationGroups = ['edit'];
+        $this->apiObjectValidator->deserializeAndValidate($content, Employee::class, [
+            AbstractNormalizer::OBJECT_TO_POPULATE => $employee,
+            AbstractObjectNormalizer::DEEP_OBJECT_TO_POPULATE => true,
+            UnwrappingDenormalizer::UNWRAP_PATH => '[employee]',
+        ], $validationGroups);
 
         $this->saveEmployee($employee, $employee->getPlainPassword());
 

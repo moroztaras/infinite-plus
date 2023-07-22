@@ -2,6 +2,7 @@
 
 namespace App\Controller\Api;
 
+use App\Entity\Employee;
 use App\Exception\Api\BadRequestJsonHttpException;
 use App\Manager\EmployeeManager;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -29,7 +30,7 @@ class EmployeeController extends ApiController
     }
 
     // Create new employee
-    #[Route(path: '/create', name: 'api_employee_create', methods: 'POST')]
+    #[Route(path: '', name: 'api_employee_create', methods: 'POST')]
     public function create(Request $request): JsonResponse
     {
         if (!($content = $request->getContent())) {
@@ -37,5 +38,19 @@ class EmployeeController extends ApiController
         }
 
         return $this->json(['employee' => $this->employeeManager->createNewEmployee($content)], Response::HTTP_OK, [], ['registration' => true]);
+    }
+
+    // Edit employee
+    #[Route(path: '', name: 'api_employee_edit', methods: 'PUT')]
+    public function edit(Request $request): JsonResponse
+    {
+        /** @var Employee $employee */
+        $employee = $this->getEmployee($request);
+
+        if (!($content = $request->getContent())) {
+            throw new BadRequestJsonHttpException('Bad Request.');
+        }
+
+        return $this->json(['employee' => $this->employeeManager->editEmployee($content, $employee)], Response::HTTP_OK);
     }
 }
