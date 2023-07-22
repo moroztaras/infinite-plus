@@ -6,6 +6,8 @@ use App\Entity\Company;
 use App\Exception\Expected\ExpectedBadRequestJsonHttpException;
 use App\Validator\Helper\ApiObjectValidator;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
 use Symfony\Component\Serializer\Normalizer\UnwrappingDenormalizer;
 
 class CompanyManager
@@ -27,6 +29,20 @@ class CompanyManager
         if ($this->doctrine->getRepository(Company::class)->findOneByName($company->getName())) {
             throw new ExpectedBadRequestJsonHttpException('Company already exists.');
         }
+
+        $this->saveCompany($company);
+
+        return $company;
+    }
+
+    public function editCompany(string $content, Company $company): Company
+    {
+        $validationGroups = ['edit'];
+        $this->apiObjectValidator->deserializeAndValidate($content, Company::class, [
+            AbstractNormalizer::OBJECT_TO_POPULATE => $company,
+            AbstractObjectNormalizer::DEEP_OBJECT_TO_POPULATE => true,
+            UnwrappingDenormalizer::UNWRAP_PATH => '[company]',
+        ], $validationGroups);
 
         $this->saveCompany($company);
 

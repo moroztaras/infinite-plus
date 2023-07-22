@@ -63,6 +63,6 @@ class EmployeeController extends ApiController
 
         $this->employeeManager->removeEmployee($employee);
 
-        return new SuccessResponse('Employee was deleted');
+        return new SuccessResponse('Employee was deletedx');
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Controller\Api;
 
+use App\Entity\Company;
 use App\Exception\Api\BadRequestJsonHttpException;
 use App\Manager\CompanyManager;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -28,5 +29,18 @@ class CompanyController extends ApiController
         }
 
         return $this->json(['company' => $this->companyManager->createNewCompany($content)], Response::HTTP_OK, [], ['create' => true]);
+    }
+
+    // Edit company
+    #[Route(path: '/{uuid}', name: 'api_company_create', methods: 'PUT')]
+    public function edit(Request $request, Company $company): JsonResponse
+    {
+        $this->getEmployee($request);
+
+        if (!($content = $request->getContent())) {
+            throw new BadRequestJsonHttpException('Bad Request.');
+        }
+
+        return $this->json(['company' => $this->companyManager->editCompany($content, $company)], Response::HTTP_OK, [], ['edit' => true]);
     }
 }
