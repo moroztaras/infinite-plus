@@ -31,6 +31,13 @@ class CompanyController extends ApiController
         return $this->json(['company' => $this->companyManager->createNewCompany($content)], Response::HTTP_OK, [], ['create' => true]);
     }
 
+    // Show company
+    #[Route(path: '/{uuid}', name: 'api_company_show', methods: 'GET')]
+    public function show(Company $company): JsonResponse
+    {
+        return $this->json(['company' => $company], Response::HTTP_OK, [], ['edit' => true]);
+    }
+
     // Edit company
     #[Route(path: '/{uuid}', name: 'api_company_create', methods: 'PUT')]
     public function edit(Request $request, Company $company): JsonResponse
