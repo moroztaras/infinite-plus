@@ -15,6 +15,12 @@ class EmployeeNormalizer implements NormalizerInterface
      */
     public function normalize($object, $format = null, array $context = []): array
     {
+        if (isset($context['registration']) || isset($context['login'])) {
+            return [
+                'apiKey' => $object->getApiKey(),
+            ];
+        }
+
         return [
             'apiKey' => $object->getApiKey(),
             'uuid' => $object->getUuid(),

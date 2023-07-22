@@ -3,7 +3,10 @@
 namespace App\Manager;
 
 use App\Entity\Employee;
+use App\Exception\Api\BadRequestJsonHttpException;
 use App\Exception\Expected\ExpectedBadRequestJsonHttpException;
+use App\Model\LoginModel;
+use App\Repository\EmployeeRepository;
 use App\Validator\Helper\ApiObjectValidator;
 use Doctrine\Persistence\ManagerRegistry;
 use Ramsey\Uuid\Nonstandard\Uuid;
@@ -16,6 +19,7 @@ class EmployeeManager
         private ManagerRegistry $doctrine,
         private UserPasswordHasherInterface $passwordEncoder,
         private ApiObjectValidator $apiObjectValidator,
+        private EmployeeRepository $employeeRepository,
     ) {
     }
 
@@ -32,6 +36,26 @@ class EmployeeManager
         }
 
         $this->saveEmployee($employee, $employee->getPlainPassword());
+
+        return $employee;
+    }
+
+    public function employeeAuthentication(string $content): Employee
+    {
+        /** @var LoginModel $login */
+        $login = $this->apiObjectValidator->deserializeAndValidate($content, LoginModel::class, [
+            UnwrappingDenormalizer::UNWRAP_PATH => '[login]',
+        ]);
+        $employee = $this->employeeRepository->findOneByEmail($login->getEmail());
+
+        if (!$employee) {
+            throw new BadRequestJsonHttpException('Authentication error');
+        }
+
+        if ($this->passwordEncoder->isPasswordValid($employee, $login->getPlainPassword())) {
+            $employee->setApiKey(Uuid::uuid4());
+            $this->saveEmployee($employee, null);
+        }
 
         return $employee;
     }

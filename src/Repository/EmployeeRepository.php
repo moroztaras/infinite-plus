@@ -20,4 +20,9 @@ class EmployeeRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Employee::class);
     }
+
+    public function findOneByEmail(string $email): Employee|null
+    {
+        return $this->findOneBy(['email' => $email]);
+    }
 }
