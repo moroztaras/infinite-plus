@@ -5,6 +5,7 @@ namespace App\Controller\Api;
 use App\Entity\Company;
 use App\Exception\Api\BadRequestJsonHttpException;
 use App\Manager\CompanyManager;
+use App\Response\SuccessResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -33,8 +34,10 @@ class CompanyController extends ApiController
 
     // Show company
     #[Route(path: '/{uuid}', name: 'api_company_show', methods: 'GET')]
-    public function show(Company $company): JsonResponse
+    public function show(Request $request, Company $company): JsonResponse
     {
+        $this->getEmployee($request);
+
         return $this->json(['company' => $company], Response::HTTP_OK, [], ['edit' => true]);
     }
 
@@ -49,5 +52,16 @@ class CompanyController extends ApiController
         }
 
         return $this->json(['company' => $this->companyManager->editCompany($content, $company)], Response::HTTP_OK, [], ['edit' => true]);
+    }
+
+    // Delete company
+    #[Route(path: '/{uuid}', name: 'api_company_delete', methods: 'DELETE')]
+    public function delete(Request $request, Company $company): JsonResponse
+    {
+        $this->getEmployee($request);
+
+        $this->companyManager->removeCompany($company);
+
+        return new SuccessResponse('Company was deleted');
     }
 }

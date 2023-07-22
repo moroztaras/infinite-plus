@@ -55,4 +55,10 @@ class CompanyManager
         $this->doctrine->getManager()->persist($company);
         $this->doctrine->getManager()->flush();
     }
+
+    public function removeCompany(Company $company): void
+    {
+        $this->doctrine->getManager()->remove($company);
+        $this->doctrine->getManager()->flush();
+    }
 }
