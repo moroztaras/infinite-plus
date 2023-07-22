@@ -76,6 +76,12 @@ class EmployeeManager
         return $employee;
     }
 
+    public function removeEmployee(Employee $employee): void
+    {
+        $this->doctrine->getManager()->remove($employee);
+        $this->doctrine->getManager()->flush();
+    }
+
     // Save employee in DB
     private function saveEmployee(Employee $employee, string $password = null): void
     {

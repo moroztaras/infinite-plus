@@ -5,6 +5,7 @@ namespace App\Controller\Api;
 use App\Entity\Employee;
 use App\Exception\Api\BadRequestJsonHttpException;
 use App\Manager\EmployeeManager;
+use App\Response\SuccessResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -52,5 +53,16 @@ class EmployeeController extends ApiController
         }
 
         return $this->json(['employee' => $this->employeeManager->editEmployee($content, $employee)], Response::HTTP_OK);
+    }
+
+    #[Route(path: '', name: 'api_employee_delete', methods: 'DELETE')]
+    public function delete(Request $request): JsonResponse
+    {
+        /** @var Employee $employee */
+        $employee = $this->getEmployee($request);
+
+        $this->employeeManager->removeEmployee($employee);
+
+        return new SuccessResponse('Employee was deleted');
     }
 }
