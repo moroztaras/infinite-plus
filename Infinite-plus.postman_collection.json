@@ -1,0 +1,172 @@
+{
+	"info": {
+		"_postman_id": "fab211ec-8d3b-46ba-9048-9863ea1edc27",
+		"name": "Infinite-plus",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11796877"
+	},
+	"item": [
+		{
+			"name": "Employee",
+			"item": [
+				{
+					"name": "apip employee create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"employee\": {  \n    \"email\": \"moroztaras@mail.ua\",\n    \"plain_password\": \"qwerty\",\n    \"first_name\": \"Taras\",\n    \"last_name\": \"Moroz\",\n    \"birthday\": \"1986-07-15\",\n    \"gender\": \"male\",\n    \"country\": \"Ukraine\"\n  }\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/employee",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"employee"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api employee login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"login\": {\n    \"email\": \"moroztaras@mail.ua\",\n    \"plain_password\": \"qwerty\"\n  }\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/employee/login",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"employee",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api employee edit",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "mail@mail.ua",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "qwerty",
+									"type": "string"
+								},
+								{
+									"key": "showPassword",
+									"value": false,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "c7a49aa4-6a46-42d5-914e-e09b6bee2316",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"employee\": {\n        \"firstName\": \"Edit First Name\",\n        \"lastName\": \"Edit Last Name\",\n        \"email\": \"moroztarasmail.ua\",\n        \"plain_password\": null,\n        \"gender\": \"male\",\n        \"birthday\": \"15-07-1987\"\n    }\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/employee",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"employee"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api employee delete",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "mail@mail.ua",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "qwerty",
+									"type": "string"
+								},
+								{
+									"key": "showPassword",
+									"value": false,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "53581d73-913d-43d7-96b7-0f210da91265",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/employee",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"employee"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
