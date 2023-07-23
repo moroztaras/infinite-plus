@@ -30,6 +30,7 @@ class EmployeeNormalizer implements NormalizerInterface
             'gender' => $object->getGender(),
             'birthday' => $object->getBirthday()->format('d-m-Y'),
             'country' => $object->getCountry(),
+            'createdAt' => $object->getCreatedAt()->format('d-m-Y'),
         ];
     }
 

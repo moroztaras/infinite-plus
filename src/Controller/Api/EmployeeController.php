@@ -41,6 +41,13 @@ class EmployeeController extends ApiController
         return $this->json(['employee' => $this->employeeManager->createNewEmployee($content)], Response::HTTP_OK, [], ['registration' => true]);
     }
 
+    // Create new employee
+    #[Route(path: '', name: 'api_employee_show', methods: 'GET')]
+    public function show(Request $request): JsonResponse
+    {
+        return $this->json(['employee' => $this->getEmployee($request)], Response::HTTP_OK);
+    }
+
     // Edit employee
     #[Route(path: '', name: 'api_employee_edit', methods: 'PUT')]
     public function edit(Request $request): JsonResponse
