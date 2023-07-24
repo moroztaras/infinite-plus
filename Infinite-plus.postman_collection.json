@@ -10,7 +10,7 @@
 			"name": "Employee",
 			"item": [
 				{
-					"name": "apip employee create",
+					"name": "api employee create",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -118,6 +118,62 @@
 					"response": []
 				},
 				{
+					"name": "api employee show",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "mail@mail.ua",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "qwerty",
+									"type": "string"
+								},
+								{
+									"key": "showPassword",
+									"value": false,
+									"type": "boolean"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "0430e150-4572-4053-af0f-e41a88a4cab0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"employee\": {\n        \"firstName\": \"Edit First Name\",\n        \"lastName\": \"Edit Last Name\",\n        \"email\": \"moroztarasmail.ua\",\n        \"plain_password\": null,\n        \"gender\": \"male\",\n        \"birthday\": \"15-07-1987\"\n    }\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/employee",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"employee"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "api employee delete",
 					"request": {
 						"auth": {
@@ -161,6 +217,292 @@
 							"path": [
 								"api",
 								"employee"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Company",
+			"item": [
+				{
+					"name": "api company create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "0430e150-4572-4053-af0f-e41a88a4cab0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"company\" : {\n        \"name\": \"New company name\",\n        \"address\": \"New Address\",\n        \"country\": \"Ukraine\"\n    }\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/company",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"company"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api company edit",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "0430e150-4572-4053-af0f-e41a88a4cab0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"company\" : {\n        \"name\": \"Edit company name2239\",\n        \"address\": \"Edit Address\",\n        \"country\": \"Ukraine\"\n    }\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/company/484ddda4-db90-4724-b024-76379b77f0c4",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"company",
+								"484ddda4-db90-4724-b024-76379b77f0c4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api company show",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "0430e150-4572-4053-af0f-e41a88a4cab0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"company\" : {\n        \"name\": \"Edit company name2239\",\n        \"address\": \"Edit Address\",\n        \"country\": \"Ukraine\"\n    }\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/company/484ddda4-db90-4724-b024-76379b77f0c4",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"company",
+								"484ddda4-db90-4724-b024-76379b77f0c4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api company delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "0430e150-4572-4053-af0f-e41a88a4cab0",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"company\" : {\n        \"name\": \"Edit company name2239\",\n        \"address\": \"Edit Address\",\n        \"country\": \"Ukraine\"\n    }\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/company/484ddda4-db90-4724-b024-76379b77f0c4",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"company",
+								"484ddda4-db90-4724-b024-76379b77f0c4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Project",
+			"item": [
+				{
+					"name": "api project create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "cfc2a956-4b9e-400a-945b-dcb1a6eb3486",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"project\": {  \n    \"name\": \"New project name\",\n    \"estimate\": 2000\n  }\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/project",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"project"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api project show",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "cfc2a956-4b9e-400a-945b-dcb1a6eb3486",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"project\": {  \n    \"name\": \"New project name\",\n    \"estimate\": 2000\n  }\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/project/a5c71484-71c2-4aa8-b808-51d7bfa2956e",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"project",
+								"a5c71484-71c2-4aa8-b808-51d7bfa2956e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api project edit",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "cfc2a956-4b9e-400a-945b-dcb1a6eb3486",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"project\": {  \n    \"name\": \"Edit project name\",\n    \"estimate\": 2500\n  }\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/project/a5c71484-71c2-4aa8-b808-51d7bfa2956e",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"project",
+								"a5c71484-71c2-4aa8-b808-51d7bfa2956e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api project delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-api-key",
+								"value": "cfc2a956-4b9e-400a-945b-dcb1a6eb3486",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"project\": {  \n    \"name\": \"Edit project name\",\n    \"estimate\": 2500\n  }\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/project/a5c71484-71c2-4aa8-b808-51d7bfa2956e",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"project",
+								"a5c71484-71c2-4aa8-b808-51d7bfa2956e"
 							]
 						}
 					},
