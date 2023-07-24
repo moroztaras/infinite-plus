@@ -41,10 +41,13 @@ class EmployeeController extends ApiController
         return $this->json(['employee' => $this->employeeManager->createNewEmployee($content)], Response::HTTP_OK, [], ['registration' => true]);
     }
 
-    // Create new employee
+    // Show employee
     #[Route(path: '', name: 'api_employee_show', methods: 'GET')]
     public function show(Request $request): JsonResponse
     {
+        /** @var Employee $employee */
+        $employee = $this->getEmployee($request);
+
         return $this->json(['employee' => $this->getEmployee($request)], Response::HTTP_OK);
     }
 
@@ -62,6 +65,7 @@ class EmployeeController extends ApiController
         return $this->json(['employee' => $this->employeeManager->editEmployee($content, $employee)], Response::HTTP_OK);
     }
 
+    // Delete employee
     #[Route(path: '', name: 'api_employee_delete', methods: 'DELETE')]
     public function delete(Request $request): JsonResponse
     {
