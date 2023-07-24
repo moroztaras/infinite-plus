@@ -16,6 +16,7 @@ class ProjectNormalizer implements NormalizerInterface
     public function normalize($object, $format = null, array $context = []): array
     {
         return [
+            'uuid' => $object->getUuid(),
             'name' => $object->getName(),
             'development_start_at' => $object->getDevelopmentStartAt()->format('d-m-Y'),
             'createdAt' => $object->getCreatedAt()->format('d-m-Y'),

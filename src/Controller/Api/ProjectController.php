@@ -32,4 +32,13 @@ class ProjectController extends ApiController
 
         return $this->json(['project' => $this->projectManager->createNewProject($content)], Response::HTTP_OK, [], ['create' => true]);
     }
+
+    // Show project
+    #[Route(path: '/{uuid}', name: 'api_project_show', methods: 'GET')]
+    public function show(Request $request, Project $project): JsonResponse
+    {
+        $this->getEmployee($request);
+
+        return $this->json(['project' => $project], Response::HTTP_OK);
+    }
 }
