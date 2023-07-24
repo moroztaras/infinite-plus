@@ -18,6 +18,7 @@ class ProjectNormalizer implements NormalizerInterface
         return [
             'uuid' => $object->getUuid(),
             'name' => $object->getName(),
+            'estimate' => $object->getEstimate(),
             'development_start_at' => $object->getDevelopmentStartAt()->format('d-m-Y'),
             'createdAt' => $object->getCreatedAt()->format('d-m-Y'),
         ];
@@ -30,6 +31,10 @@ class ProjectNormalizer implements NormalizerInterface
 
             if (isset($data['name'])) {
                 $object->setName($data['name']);
+            }
+
+            if (isset($data['estimate'])) {
+                $object->setName($data['estimate']);
             }
 
             return $object;

@@ -6,6 +6,8 @@ use App\Entity\Project;
 use App\Exception\Expected\ExpectedBadRequestJsonHttpException;
 use App\Validator\Helper\ApiObjectValidator;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
 use Symfony\Component\Serializer\Normalizer\UnwrappingDenormalizer;
 
 class ProjectManager
@@ -27,6 +29,20 @@ class ProjectManager
         if ($this->doctrine->getRepository(Project::class)->findOneBy(['name' => $project->getName()])) {
             throw new ExpectedBadRequestJsonHttpException('Project already exists.');
         }
+
+        $this->saveProject($project);
+
+        return $project;
+    }
+
+    public function editProject(string $content, Project $project): Project
+    {
+        $validationGroups = ['edit'];
+        $this->apiObjectValidator->deserializeAndValidate($content, Project::class, [
+            AbstractNormalizer::OBJECT_TO_POPULATE => $project,
+            AbstractObjectNormalizer::DEEP_OBJECT_TO_POPULATE => true,
+            UnwrappingDenormalizer::UNWRAP_PATH => '[project]',
+        ], $validationGroups);
 
         $this->saveProject($project);
 

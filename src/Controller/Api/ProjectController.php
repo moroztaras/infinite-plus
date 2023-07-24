@@ -41,4 +41,17 @@ class ProjectController extends ApiController
 
         return $this->json(['project' => $project], Response::HTTP_OK);
     }
+
+    // Edit project
+    #[Route(path: '/{uuid}', name: 'api_project_create', methods: 'PUT')]
+    public function edit(Request $request, Project $project): JsonResponse
+    {
+        $this->getEmployee($request);
+
+        if (!($content = $request->getContent())) {
+            throw new BadRequestJsonHttpException('Bad Request.');
+        }
+
+        return $this->json(['project' => $this->projectManager->editProject($content, $project)], Response::HTTP_OK, [], ['edit' => true]);
+    }
 }
