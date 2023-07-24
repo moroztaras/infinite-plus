@@ -26,6 +26,9 @@ class Project
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $developmentStartAt;
 
+    #[ORM\ManyToOne(targetEntity: Employee::class, inversedBy: 'projects')]
+    private ?Employee $employee;
+
     public function __construct()
     {
         $this->developmentStartAt = new \DateTime();
@@ -70,6 +73,18 @@ class Project
     public function setDevelopmentStartAt(\DateTime $developmentStartAt): self
     {
         $this->developmentStartAt = $developmentStartAt;
+
+        return $this;
+    }
+
+    public function getEmployee(): ?Employee
+    {
+        return $this->employee;
+    }
+
+    public function setEmployee(?Employee $employee): self
+    {
+        $this->employee = $employee;
 
         return $this;
     }

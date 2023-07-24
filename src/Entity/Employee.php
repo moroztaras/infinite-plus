@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\EmployeeRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -59,8 +61,15 @@ class Employee implements PasswordAuthenticatedUserInterface, UserInterface
     #[ORM\Column(name: 'api_key', unique: true)]
     private string $apiKey;
 
+    #[ORM\ManyToOne(targetEntity: Company::class, inversedBy: 'employees')]
+    private ?Company $company;
+
+    #[ORM\OneToMany(mappedBy: 'employee', targetEntity: Project::class, cascade: ['persist', 'remove'])]
+    private Collection $projects;
+
     public function __construct()
     {
+        $this->projects = new ArrayCollection();
         $this->setRoles([self::ROLE_USER]);
         $this->createUuid();
         $this->setDateTime();
@@ -194,6 +203,61 @@ class Employee implements PasswordAuthenticatedUserInterface, UserInterface
     public function setApiKey(string $apiKey): self
     {
         $this->apiKey = $apiKey;
+
+        return $this;
+    }
+
+    public function getCompany(): ?Company
+    {
+        return $this->company;
+    }
+
+    public function setCompany(?Company $company): self
+    {
+        $this->company = $company;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<Project>
+     */
+    public function getProjects(): Collection
+    {
+        return $this->projects;
+    }
+
+    /**
+     * @param Collection<Project> $projects
+     *
+     * @return $this
+     */
+    public function setEmployees(Collection $projects): self
+    {
+        $this->projects = $projects;
+
+        return $this;
+    }
+
+    public function addProject(Project $project): self
+    {
+        if (!$this->projects->contains($project)) {
+            $this->projects[] = $project;
+            $project->setEmployee($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProject(Project $project): self
+    {
+        if ($this->projects->contains($project)) {
+            $this->projects->removeElement($project);
+            // set the owning side to null (unless already changed)
+            if ($project->getEmployee() === $this) {
+                $project->setEmployee(null);
+            }
+        }
 
         return $this;
     }
